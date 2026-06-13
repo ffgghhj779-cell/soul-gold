@@ -1,0 +1,6 @@
+{
+  "name": "Soul Gold",
+  "description": "Luxury food e-commerce website for Soul Gold.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
