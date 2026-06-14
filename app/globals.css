@@ -264,6 +264,32 @@ html[lang='en'] button {
     to { transform: rotate(360deg); }
   }
 
+  /* ── Cinematic light sweep across jewelry cards ── */
+  @keyframes card-light-sweep {
+    0%   { transform: translate3d(-220%, 0, 0) skewX(-18deg); opacity: 0; }
+    8%   { opacity: 1; }
+    35%  { transform: translate3d(280%, 0, 0) skewX(-18deg); opacity: 1; }
+    36%  { opacity: 0; }
+    100% { transform: translate3d(280%, 0, 0) skewX(-18deg); opacity: 0; }
+  }
+  .card-sweep {
+    animation: card-light-sweep 5.5s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+  }
+
+  /* ── Gold dust float variants ── */
+  @keyframes gold-float-a {
+    0%, 100% { transform: translate3d(0, 0, 0); opacity: 0.22; }
+    50%       { transform: translate3d(6px, -22px, 0); opacity: 0.5; }
+  }
+  @keyframes gold-float-b {
+    0%, 100% { transform: translate3d(0, 0, 0); opacity: 0.16; }
+    50%       { transform: translate3d(-8px, -30px, 0); opacity: 0.42; }
+  }
+  @keyframes gold-float-c {
+    0%, 100% { transform: translate3d(0, 0, 0); opacity: 0.28; }
+    50%       { transform: translate3d(4px, -16px, 0); opacity: 0.55; }
+  }
+
   /* ── Header shimmer border ── */
   .shimmer-border-wrap {
     background: linear-gradient(
