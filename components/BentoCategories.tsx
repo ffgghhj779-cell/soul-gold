@@ -4,6 +4,7 @@ import React from 'react';
 import Image from 'next/image';
 import { motion } from 'motion/react';
 import { ArrowUpRight } from 'lucide-react';
+import { useMediaQuery } from '@/lib/useMediaQuery';
 
 type Lang = 'ar' | 'en';
 
@@ -73,6 +74,7 @@ function BentoTile({
   isHero?: boolean;
   className?: string;
 }) {
+  const isMobile = useMediaQuery('(max-width: 767px)');
   return (
     <motion.div
       custom={idx}
@@ -81,7 +83,7 @@ function BentoTile({
       viewport={{ once: true, amount: 0.1 }}
       /* Use simpler fade-only on mobile (no Y translation = no layout work each frame)
          and full slide+fade on desktop via CSS media via the variants object trick */
-      variants={typeof window !== 'undefined' && window.innerWidth < 768 ? reveal : revealDesktop}
+      variants={isMobile ? reveal : revealDesktop}
       className={`group relative rounded overflow-hidden cursor-pointer touch-manipulation select-none ${className}`}
     >
       {/* Image */}

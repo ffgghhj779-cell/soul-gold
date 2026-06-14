@@ -18,6 +18,7 @@ const tajawal = Tajawal({
 
 const ebGaramond = EB_Garamond({
   weight: ['400', '500', '600'],
+  style: ['normal', 'italic'],
   subsets: ['latin'],
   variable: '--font-eb-garamond',
   display: 'swap',

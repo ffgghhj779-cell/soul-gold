@@ -28,6 +28,9 @@ type Product = {
   image: string;
   badge_en?: string;
   badge_ar?: string;
+  rating?: number;
+  reviews?: number;
+  inStock?: boolean;
 };
 
 const PRODUCTS: Product[] = [
@@ -44,6 +47,9 @@ const PRODUCTS: Product[] = [
       'https://images.unsplash.com/photo-1551782450-17144efb9c50?auto=format&fit=crop&w=800&q=85',
     badge_en: 'Best Seller',
     badge_ar: 'الأكثر مبيعاً',
+    rating: 4.9,
+    reviews: 2847,
+    inStock: true,
   },
   {
     id: 'ghee',
@@ -56,6 +62,9 @@ const PRODUCTS: Product[] = [
     price: 119,
     image:
       'https://images.unsplash.com/photo-1628088062854-d1870b4553da?auto=format&fit=crop&w=800&q=85',
+    rating: 4.8,
+    reviews: 1293,
+    inStock: true,
   },
   {
     id: 'honey',
@@ -70,8 +79,50 @@ const PRODUCTS: Product[] = [
       'https://images.unsplash.com/photo-1558642452-9d2a7deb7f62?auto=format&fit=crop&w=800&q=85',
     badge_en: 'New Arrival',
     badge_ar: 'وصل حديثاً',
+    rating: 4.9,
+    reviews: 986,
+    inStock: false,
   },
 ];
+
+function StarRating({ rating, reviews, lang }: { rating: number; reviews: number; lang: Lang }) {
+  const full = Math.floor(rating);
+  const isRtl = lang === 'ar';
+
+  return (
+    <div className="flex items-center gap-2 mb-2">
+      {/* Diamond icons — premium alternative to yellow stars */}
+      <div className="flex items-center gap-0.5">
+        {Array.from({ length: 5 }).map((_, i) => (
+          <svg
+            key={i}
+            width="10"
+            height="10"
+            viewBox="0 0 10 10"
+            fill={i < full ? '#C9A03D' : 'none'}
+            stroke="#C9A03D"
+            strokeWidth="1"
+            aria-hidden="true"
+          >
+            <polygon points="5,1 9,5 5,9 1,5" />
+          </svg>
+        ))}
+      </div>
+      <span
+        className="text-[11px] font-bold text-[#C9A03D]"
+        style={{ fontFamily: 'var(--font-hanken)' }}
+      >
+        {rating.toFixed(1)}
+      </span>
+      <span
+        className="text-[11px] text-[#7B776E]"
+        style={{ fontFamily: 'var(--font-hanken)' }}
+      >
+        ({reviews.toLocaleString(isRtl ? 'ar-SA' : 'en-US')})
+      </span>
+    </div>
+  );
+}
 
 /* ── Single product card ─────────────────────────────────────────────── */
 function ProductCard({
@@ -86,6 +137,7 @@ function ProductCard({
   index: number;
 }) {
   const isRtl = lang === 'ar';
+  const inStock = product.inStock !== false;
   const [hovered, setHovered] = useState(false);
   const [adding, setAdding] = useState(false);
 
@@ -107,13 +159,14 @@ function ProductCard({
       }}
     >
       {/* ── Image container ──────────────────────────────────────── */}
-      <div
-        className="relative w-full overflow-hidden"
-        style={{
-          aspectRatio: '4/5',
-          borderRadius: '4px',
-          backgroundColor: 'var(--sg-surface-container, #F6ECE3)',
-          /* Shadow: diffused, obsidian-tinted per spec */
+        <div
+          className="relative w-full overflow-hidden"
+          style={{
+            aspectRatio: '4/5',
+            borderRadius: '4px',
+            backgroundColor: 'var(--sg-surface-container, #F6ECE3)',
+            opacity: inStock ? 1 : 0.5,
+            /* Shadow: diffused, obsidian-tinted per spec */
           boxShadow: hovered
             ? '0 24px 56px rgba(26,22,18,0.12), 0 6px 16px rgba(26,22,18,0.07)'
             : '0 4px 16px rgba(26,22,18,0.05)',
@@ -159,24 +212,43 @@ function ProductCard({
             transition: 'opacity 0.3s ease',
           }}
         >
-          <button
-            onClick={handleAdd}
-            disabled={adding}
-            className="w-full min-h-[44px] rounded-sm font-semibold text-xs uppercase tracking-widest active:scale-95 touch-manipulation"
-            style={{
-              fontFamily: 'var(--font-hanken, sans-serif)',
-              backgroundColor: adding ? '#C9A03D' : '#1A1612',
-              color: adding ? '#1A1612' : '#FEF7ED',
-              letterSpacing: '0.1em',
-              transition: 'background-color 0.3s ease, color 0.3s ease',
-              border: 'none',
-            }}
-            aria-label={isRtl ? `أضف ${product.name_ar} إلى السلة` : `Add ${product.name_en} to cart`}
-          >
-            {adding
-              ? (isRtl ? '✓ أُضيف' : '✓ Added')
-              : (isRtl ? 'أضف إلى السلة' : 'Quick Add')}
-          </button>
+          {inStock === false ? (
+            <div className="w-full text-center">
+              <div
+                className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-[rgba(201,160,61,0.3)] bg-[#1A1612]/80 backdrop-blur-sm text-[#C9A03D] text-xs font-bold tracking-[0.2em] uppercase"
+                style={{ fontFamily: 'var(--font-hanken)' }}
+              >
+                <span>◆</span>
+                <span>{lang === 'ar' ? 'نفد المخزون' : 'Sold Out'}</span>
+              </div>
+              <button
+                className="block w-full mt-2 text-[11px] text-[#FEF7ED]/80 hover:text-[#C9A03D] smooth-transition underline underline-offset-2 touch-manipulation drop-shadow-md"
+                style={{ fontFamily: 'var(--font-hanken)' }}
+                onClick={() => {}}
+              >
+                {lang === 'ar' ? 'أخبرني عند توفره' : 'Notify me when available'}
+              </button>
+            </div>
+          ) : (
+            <button
+              onClick={handleAdd}
+              disabled={adding}
+              className="w-full min-h-[44px] rounded-sm font-semibold text-xs uppercase tracking-widest active:scale-95 touch-manipulation"
+              style={{
+                fontFamily: 'var(--font-hanken, sans-serif)',
+                backgroundColor: adding ? '#C9A03D' : '#1A1612',
+                color: adding ? '#1A1612' : '#FEF7ED',
+                letterSpacing: '0.1em',
+                transition: 'background-color 0.3s ease, color 0.3s ease',
+                border: 'none',
+              }}
+              aria-label={isRtl ? `أضف ${product.name_ar} إلى السلة` : `Add ${product.name_en} to cart`}
+            >
+              {adding
+                ? (isRtl ? '✓ أُضيف' : '✓ Added')
+                : (isRtl ? 'أضف إلى السلة' : 'Quick Add')}
+            </button>
+          )}
         </div>
       </div>
 
@@ -192,6 +264,10 @@ function ProductCard({
         >
           {isRtl ? product.tag_ar : product.tag_en}
         </p>
+
+        {product.rating && product.reviews && (
+          <StarRating rating={product.rating} reviews={product.reviews} lang={lang} />
+        )}
 
         {/* Product name — headline-md: EB Garamond 500 */}
         <h3

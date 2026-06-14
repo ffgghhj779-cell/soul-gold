@@ -24,6 +24,17 @@ import BentoCategories  from '@/components/BentoCategories';
 import StatementFooter  from '@/components/StatementFooter';
 import SoulGoldHero     from '@/components/SoulGoldHero';
 import CuratedEssentials from '@/components/CuratedEssentials';
+import SoulGoldShowcase, { ShowcaseProduct } from '@/components/SoulGoldShowcase';
+import SideCartDrawer from '@/components/SideCartDrawer';
+import { ToastProvider, useToast } from '@/lib/useToast';
+import ToastStack from '@/components/ToastStack';
+import EditorialPullQuote from '@/components/EditorialPullQuote';
+import OriginStory from '@/components/OriginStory';
+import ChefPairings from '@/components/ChefPairings';
+import PressWall from '@/components/PressWall';
+import TrustBar from '@/components/TrustBar';
+import IngredientMap from '@/components/IngredientMap';
+import StickyProductBar from '@/components/StickyProductBar';
 
 const t = {
   ar: {
@@ -204,6 +215,14 @@ type CartItem = {
 };
 
 export default function SoulGoldApp() {
+  return (
+    <ToastProvider>
+      <SoulGoldAppContent />
+    </ToastProvider>
+  );
+}
+
+function SoulGoldAppContent() {
   const [lang, setLang] = useState<Lang>('ar');
   const [cart, setCart] = useState<CartItem[]>([]);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -218,6 +237,8 @@ export default function SoulGoldApp() {
   const [customerPhone, setCustomerPhone] = useState('');
   const [customerAddress, setCustomerAddress] = useState('');
   const productsRef = React.useRef<HTMLDivElement>(null);
+
+  const { toast } = useToast();
 
   const cartCount = cart.reduce((sum, item) => sum + item.qty, 0);
   const cartTotal = cart.reduce((sum, item) => sum + item.product.price * item.qty, 0);
@@ -279,6 +300,32 @@ export default function SoulGoldApp() {
       }
       return [...prev, { product, qty: 1 }];
     });
+    
+    // Trigger toast using new ToastProvider
+    const title = lang === 'ar' ? product.title_ar : product.title_en;
+    const msg = lang === 'ar' ? `تم إضافة ${title} إلى السلة` : `Added ${title} to cart`;
+    toast(msg, 'success');
+  };
+
+  const handleShowcaseAddToCart = (p: ShowcaseProduct) => {
+    handleAddToCart({
+      id: p.id as any,
+      title_en: p.name_en,
+      title_ar: p.name_ar,
+      desc_en: p.sub_en,
+      desc_ar: p.sub_ar,
+      price: p.price,
+      image: `/products/${p.file.replace(/ /g, '%20')}`,
+      weight_en: '',
+      weight_ar: '',
+      categoryKey: 'showcase',
+      badge_en: '',
+      badge_ar: '',
+      bgColor: 'bg-cream',
+    });
+    const title = lang === 'ar' ? p.name_ar : p.name_en;
+    const msg = lang === 'ar' ? `تم إضافة ${title} إلى السلة` : `Added ${title} to cart`;
+    toast(msg, 'success');
   };
 
   const openCheckout = () => {
@@ -314,10 +361,11 @@ export default function SoulGoldApp() {
       });
       const data = await res.json();
       if (data.success) {
-        alert(
+        toast(
           lang === 'ar'
             ? 'تم تأكيد الطلب بنجاح! رقم الطلب: ' + data.orderId
-            : 'Order placed successfully! Order ID: ' + data.orderId
+            : 'Order placed successfully! Order ID: ' + data.orderId,
+          'success'
         );
         setCart([]);
         setIsCheckoutOpen(false);
@@ -325,10 +373,11 @@ export default function SoulGoldApp() {
         setCustomerPhone('');
         setCustomerAddress('');
       } else {
-        alert(data.message || (lang === 'ar' ? 'فشل الطلب' : 'Order failed'));
+        toast(data.message || (lang === 'ar' ? 'فشل الطلب' : 'Order failed'), 'error');
       }
     } catch (error) {
       console.error('Checkout failed:', error);
+      toast(lang === 'ar' ? 'فشل إتمام الطلب' : 'Checkout failed', 'error');
     } finally {
       setIsCheckingOut(false);
     }
@@ -396,62 +445,24 @@ export default function SoulGoldApp() {
       {/* <LuxuryHero lang={lang} dict={dict} onShopNow={scrollToProducts} /> */}
 
       {/* ---------- Trust Indicators ---------- */}
-      <div className="max-w-7xl mx-auto px-4 -mt-8 md:-mt-12 relative z-10 smooth-transition hardware-accelerated">
-        <div className="glass-card rounded-[32px] p-6 flex flex-nowrap overflow-x-auto gap-8 justify-between items-center hide-scrollbar snap-x snap-mandatory">
-          <div className="flex flex-col items-center min-w-[140px] px-4 gap-3 text-center text-soft-charcoal smooth-transition snap-center">
-            <div className="w-14 h-14 bg-cream rounded-full flex items-center justify-center text-primary-gold shadow-sm">
-              <ShieldCheck size={28} />
-            </div>
-            <span className="font-bold text-sm tracking-tight">{dict.trust1}</span>
-          </div>
-          <div className="w-[2px] h-12 bg-cream hidden md:block"></div>
-          
-          <div className="flex flex-col items-center min-w-[140px] px-4 gap-3 text-center text-soft-charcoal smooth-transition snap-center">
-            <div className="w-14 h-14 bg-green-50 rounded-full flex items-center justify-center text-green-600 shadow-sm">
-              <Leaf size={28} />
-            </div>
-            <span className="font-bold text-sm tracking-tight">{dict.trust2}</span>
-          </div>
-          <div className="w-[2px] h-12 bg-cream hidden md:block"></div>
-          
-          <div className="flex flex-col items-center min-w-[140px] px-4 gap-3 text-center text-soft-charcoal smooth-transition snap-center">
-            <div className="w-14 h-14 bg-orange-50 rounded-full flex items-center justify-center text-terracotta shadow-sm">
-              <Users size={28} />
-            </div>
-            <span className="font-bold text-sm tracking-tight">{dict.trust3}</span>
-          </div>
-          <div className="w-[2px] h-12 bg-cream hidden md:block"></div>
-          
-          <div className="flex flex-col items-center min-w-[140px] px-4 gap-3 text-center text-soft-charcoal smooth-transition snap-center">
-            <div className="w-14 h-14 bg-blue-50 rounded-full flex items-center justify-center text-blue-500 shadow-sm">
-              <Clock size={28} />
-            </div>
-            <span className="font-bold text-sm tracking-tight">{dict.trust4}</span>
-          </div>
-        </div>
-      </div>
+      <TrustBar lang={lang} />
 
       {/* ---------- Bento Categories ---------- */}
       <BentoCategories lang={lang} dict={dict} />
+      
+      {/* ---------- Storytelling / Editorial Sections ---------- */}
+      <EditorialPullQuote lang={lang} />
+      <OriginStory lang={lang} />
+      <IngredientMap lang={lang} />
 
-      {/* ---------- Curated Essentials — DESIGN.md Section ---------- */}
-      <CuratedEssentials
-        lang={lang}
-        onAddToCart={(p) => handleAddToCart({ id: p.id, title_en: p.name_en, title_ar: p.name_ar, price: p.price, image: p.image, desc_en: p.origin_en, desc_ar: p.origin_ar, weight_en: p.tag_en, weight_ar: p.tag_ar, bgColor: 'bg-cream', categoryKey: 'essentials', badge_en: p.badge_en ?? '', badge_ar: p.badge_ar ?? '' } as unknown as Parameters<typeof handleAddToCart>[0])}
-      />
-
-      {/* ---------- Product Runway Carousel ---------- */}
+      {/* ---------- Soul Gold Showcase (Bento + Grid) ---------- */}
       <div ref={productsRef}>
-        <ProductRunway
-          lang={lang}
-          products={products}
-          isLoading={isLoadingProducts}
-          activeCategory={activeCategory}
-          onCategoryChange={setActiveCategory}
-          onAddToCart={handleAddToCart}
-          dict={dict}
-        />
+        <SoulGoldShowcase lang={lang} onAddToCart={handleShowcaseAddToCart} />
       </div>
+      
+      {/* ---------- Chef Pairings & Press Wall ---------- */}
+      <ChefPairings lang={lang} />
+      <PressWall lang={lang} />
 
       {/* ---------- AI Consultant — Sticky Split-Screen ---------- */}
       <section id="ai-consultant" className="bg-white relative overflow-hidden">
@@ -647,90 +658,48 @@ export default function SoulGoldApp() {
       <StatementFooter lang={lang} dict={dict} />
 
       {/* ---------- Checkout Modal ---------- */}
-      <AnimatePresence>
-        {isCheckoutOpen && (
-          <>
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              className="fixed inset-0 bg-soft-charcoal/50 backdrop-blur-sm z-[60] hardware-accelerated"
-              onClick={() => setIsCheckoutOpen(false)}
-            />
-            <motion.div
-              initial={{ opacity: 0, y: 40, scale: 0.95 }}
-              animate={{ opacity: 1, y: 0, scale: 1 }}
-              exit={{ opacity: 0, y: 40, scale: 0.95 }}
-              transition={{ duration: 0.3, ease: 'easeOut' }}
-              className="fixed inset-x-4 top-1/2 -translate-y-1/2 max-w-md mx-auto bg-[#FEF7ED] border border-[var(--sg-outline-variant)] rounded p-6 z-[70] hardware-accelerated luxury-shadow"
-            >
-              <div className="flex items-center justify-between mb-6">
-                <h3 className="text-2xl font-medium text-[var(--sg-on-surface)]" style={{ fontFamily: 'var(--font-eb-garamond, Georgia, serif)' }}>{dict.checkoutTitle}</h3>
-                <button
-                  onClick={() => setIsCheckoutOpen(false)}
-                  className="min-w-[48px] min-h-[48px] flex items-center justify-center rounded-full hover:bg-cream smooth-transition active:scale-95 touch-manipulation"
-                  aria-label={dict.cancel}
-                >
-                  <X size={20} />
-                </button>
-              </div>
-              <form onSubmit={handleCheckout} className="space-y-4">
-                <div>
-                  <label className="block text-sm font-semibold text-[var(--sg-on-surface-var)] mb-2" style={{ fontFamily: 'var(--font-hanken, sans-serif)' }}>{dict.nameLabel}</label>
-                  <input
-                    required
-                    value={customerName}
-                    onChange={(e) => setCustomerName(e.target.value)}
-                    className="w-full bg-white border border-[var(--sg-outline-variant)] text-[var(--sg-on-surface)] px-4 py-3 min-h-[48px] rounded outline-none focus:border-[#C9A03D] smooth-transition"
-                    style={{ fontFamily: 'var(--font-hanken, sans-serif)' }}
-                  />
-                </div>
-                <div>
-                  <label className="block text-sm font-semibold text-[var(--sg-on-surface-var)] mb-2" style={{ fontFamily: 'var(--font-hanken, sans-serif)' }}>{dict.phoneLabel}</label>
-                  <input
-                    required
-                    type="tel"
-                    value={customerPhone}
-                    onChange={(e) => setCustomerPhone(e.target.value)}
-                    className="w-full bg-white border border-[var(--sg-outline-variant)] text-[var(--sg-on-surface)] px-4 py-3 min-h-[48px] rounded outline-none focus:border-[#C9A03D] smooth-transition"
-                    style={{ fontFamily: 'var(--font-hanken, sans-serif)' }}
-                  />
-                </div>
-                <div>
-                  <label className="block text-sm font-semibold text-[var(--sg-on-surface-var)] mb-2" style={{ fontFamily: 'var(--font-hanken, sans-serif)' }}>{dict.addressLabel}</label>
-                  <textarea
-                    required
-                    value={customerAddress}
-                    onChange={(e) => setCustomerAddress(e.target.value)}
-                    rows={3}
-                    className="w-full bg-white border border-[var(--sg-outline-variant)] text-[var(--sg-on-surface)] px-4 py-3 rounded outline-none focus:border-[#C9A03D] smooth-transition resize-none"
-                    style={{ fontFamily: 'var(--font-hanken, sans-serif)' }}
-                  />
-                </div>
-                <div className="flex items-center justify-between pt-2">
-                  <span className="font-semibold text-lg text-[var(--sg-on-surface)]" style={{ fontFamily: 'var(--font-hanken, sans-serif)' }}>SAR {cartTotal}</span>
-                  <div className="flex gap-2" style={{ fontFamily: 'var(--font-hanken, sans-serif)' }}>
-                    <button
-                      type="button"
-                      onClick={() => setIsCheckoutOpen(false)}
-                      className="px-5 min-h-[48px] rounded font-semibold text-[var(--sg-on-surface)] hover:bg-[#1A1612]/5 smooth-transition active:scale-95 touch-manipulation"
-                    >
-                      {dict.cancel}
-                    </button>
-                    <button
-                      type="submit"
-                      disabled={isCheckingOut}
-                      className="px-6 min-h-[48px] rounded font-semibold bg-[#1A1612] text-[#FEF7ED] hover:bg-[#2C2520] smooth-transition active:scale-95 touch-manipulation disabled:opacity-50"
-                    >
-                      {dict.placeOrder}
-                    </button>
-                  </div>
-                </div>
-              </form>
-            </motion.div>
-          </>
-        )}
-      </AnimatePresence>
+      {/* Replaced by SideCartDrawer, but kept here if direct checkout is needed */}
+      <SideCartDrawer
+        lang={lang}
+        isOpen={isCheckoutOpen}
+        cart={cart}
+        onClose={() => setIsCheckoutOpen(false)}
+        onUpdateQty={(id, delta) => {
+          setCart(prev => prev.map(item => {
+            if (item.product.id === id) {
+              const newQty = item.qty + delta;
+              return newQty > 0 ? { ...item, qty: newQty } : item;
+            }
+            return item;
+          }).filter(item => item.qty > 0));
+        }}
+        onRemove={(id) => {
+          setCart(prev => prev.filter(item => item.product.id !== id));
+        }}
+        onCheckout={() => {
+          // This would typically go to a real checkout page
+          // For now, simulate checkout
+          handleCheckout({ preventDefault: () => {} } as any);
+        }}
+      />
+      
+      {/* ---------- Toast Notifications ---------- */}
+      <ToastStack />
+
+      {/* ---------- Sticky Product Bar (Mobile) ---------- */}
+      <StickyProductBar
+        lang={lang}
+        isVisible={!isCheckoutOpen}
+        onAddToCart={() => {
+          handleAddToCart({
+            id: 999 as any,
+            title_en: 'Signature Collection',
+            title_ar: 'المجموعة المميزة',
+            desc_en: '', desc_ar: '', price: 200, image: 'https://images.unsplash.com/photo-1590412200988-a436970781fa?auto=format&fit=crop&w=900&q=80',
+            weight_en: '', weight_ar: '', categoryKey: 'showcase', badge_en: '', badge_ar: '', bgColor: 'bg-cream'
+          });
+        }}
+      />
 
       {/* ---------- Floating WhatsApp Button ---------- */}
       <a 

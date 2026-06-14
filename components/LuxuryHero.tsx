@@ -327,7 +327,24 @@ export default function LuxuryHero({
             className="hidden lg:flex lg:col-span-6 xl:col-span-7 relative h-[520px] lg:h-[600px] items-center justify-center hardware-accelerated"
             initial={false}
           >
-            <div className="relative w-full max-w-[520px] h-full">
+            {/* ── Editorial ghost number — sits behind the card stack ── */}
+            <div
+              aria-hidden="true"
+              className="absolute -start-4 top-1/2 -translate-y-1/2 select-none pointer-events-none overflow-hidden"
+              style={{
+                fontFamily: 'var(--font-eb-garamond, Georgia, serif)',
+                fontSize: 'clamp(8rem, 22vw, 18rem)',
+                fontWeight: 600,
+                color: 'transparent',
+                WebkitTextStroke: '1px rgba(201,160,61,0.1)',
+                lineHeight: 1,
+                letterSpacing: '-0.05em',
+                zIndex: 0,
+              }}
+            >
+              01
+            </div>
+            <div className="relative w-full max-w-[520px] h-full" style={{ zIndex: 1 }}>
               {showcaseFrames.map((frame, idx) => {
                 const sizeClass =
                   frame.size === 'lg'

@@ -70,6 +70,7 @@ body {
   font-family: var(--font-tajawal), sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  font-optical-sizing: auto;
   overflow-x: hidden;
   /* Allow native vertical scroll and momentum on all mobile browsers */
   overflow-y: auto;
@@ -308,7 +309,10 @@ html[lang='en'] button {
   }
   html[lang='en'] .italic-editorial {
     font-style: italic;
-    font-weight: 800;
+    font-weight: 400;
+    font-family: var(--font-eb-garamond, Georgia, serif);
+    font-optical-sizing: auto;
+    letter-spacing: 0.015em;
   }
   .mesh-hero {
     background-color: var(--cream);
@@ -462,5 +466,96 @@ html[lang='en'] button {
     line-height: 1.05;
     letter-spacing: 0;
     word-break: break-word;
+  }
+
+  /* ── Editorial Drop-cap ────────────────────────────────────────── */
+  .editorial-dropcap::first-letter {
+    font-family: var(--font-eb-garamond, Georgia, serif);
+    font-size: 5.2em;
+    font-weight: 400;
+    font-style: italic;
+    float: inline-start;
+    line-height: 0.78;
+    margin-inline-end: 0.08em;
+    margin-block-start: 0.06em;
+    color: var(--primary-gold);
+  }
+
+  /* ── Ultra-large editorial display text ───────────────────────── */
+  .text-display-ultra {
+    font-size: clamp(3.5rem, 10vw + 1rem, 9rem);
+    line-height: 0.88;
+    letter-spacing: -0.04em;
+    font-feature-settings: 'liga' 1, 'kern' 1, 'onum' 1;
+    font-optical-sizing: auto;
+  }
+
+  /* ── CSS-only reveal-on-scroll (3x lighter than Framer for static reveals) */
+  @keyframes reveal-up {
+    from { opacity: 0; transform: translateY(24px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  .reveal-on-scroll {
+    opacity: 0;
+    animation: reveal-up 0.7s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+    animation-play-state: paused;
+  }
+  .reveal-on-scroll.in-view {
+    animation-play-state: running;
+  }
+
+  /* ── Premium linen texture for cream sections ─────────────────── */
+  .texture-linen {
+    background-image:
+      repeating-linear-gradient(
+        0deg,
+        transparent, transparent 2px,
+        rgba(201,160,61,0.013) 2px, rgba(201,160,61,0.013) 4px
+      );
+  }
+
+  /* ── Canvas texture for dark obsidian sections ─────────────────── */
+  .texture-canvas {
+    background-image:
+      repeating-linear-gradient(
+        45deg,
+        rgba(255,255,255,0.016) 0px, rgba(255,255,255,0.016) 1px,
+        transparent 1px, transparent 4px
+      );
+  }
+
+  /* ── Vellum cross-hatch for transitional sections ──────────────── */
+  .texture-vellum {
+    background-image:
+      repeating-linear-gradient(0deg, rgba(0,0,0,0.018) 0, rgba(0,0,0,0.018) 1px, transparent 1px, transparent 8px),
+      repeating-linear-gradient(90deg, rgba(0,0,0,0.018) 0, rgba(0,0,0,0.018) 1px, transparent 1px, transparent 8px);
+  }
+
+  /* ── Gold foil divider — reusable ──────────────────────────────── */
+  .divider-gold-foil {
+    height: 1px;
+    border: none;
+    background: linear-gradient(
+      90deg,
+      transparent 0%,
+      rgba(201,160,61,0.0) 5%,
+      rgba(201,160,61,0.55) 35%,
+      rgba(232,196,104,0.95) 50%,
+      rgba(201,160,61,0.55) 65%,
+      rgba(201,160,61,0.0) 95%,
+      transparent 100%
+    );
+  }
+
+  /* ── Kinetic counter number ─────────────────────────────────────── */
+  .counter-display {
+    font-family: var(--font-eb-garamond, Georgia, serif);
+    font-size: clamp(3rem, 8vw, 7rem);
+    font-weight: 600;
+    line-height: 0.9;
+    letter-spacing: -0.03em;
+    color: var(--primary-gold);
+    font-optical-sizing: auto;
+    font-feature-settings: 'onum' 1;
   }
 }
