@@ -51,7 +51,7 @@ export default function StatementFooter({ lang, dict }: StatementFooterProps) {
   ];
 
   return (
-    <footer className="relative bg-obsidian text-white overflow-hidden pb-safe">
+    <footer className="relative bg-[#1A1612] text-[#FEF7ED] overflow-hidden pb-safe" style={{ fontFamily: 'var(--font-hanken, sans-serif)' }}>
 
       {/* ── Grain noise overlay ── */}
       <div className="grain-overlay pointer-events-none" aria-hidden="true"
@@ -59,8 +59,8 @@ export default function StatementFooter({ lang, dict }: StatementFooterProps) {
 
       {/* ── Atmospheric glows ── */}
       <div aria-hidden="true" className="pointer-events-none absolute inset-0 overflow-hidden">
-        <div className="absolute -top-32 start-[8%] w-[520px] h-[520px] rounded-full bg-primary-gold/8 blur-[180px]" />
-        <div className="absolute bottom-0 end-[4%] w-[400px] h-[400px] rounded-full bg-terracotta/6 blur-[150px]" />
+        <div className="absolute -top-32 start-[8%] w-[520px] h-[520px] rounded-full bg-[#C9A03D]/5 blur-[180px]" />
+        <div className="absolute bottom-0 end-[4%] w-[400px] h-[400px] rounded-full bg-[#FEF7ED]/5 blur-[150px]" />
       </div>
 
       {/* ── Cinematic typographic lockup ── */}
@@ -85,7 +85,8 @@ export default function StatementFooter({ lang, dict }: StatementFooterProps) {
               whileInView={{ y: '0%' }}
               viewport={{ once: true, amount: 0.3 }}
               transition={{ duration: 1.1, ease: [0.22, 1, 0.36, 1] as const }}
-              className="statement-brand font-extrabold text-white leading-[0.9] select-none"
+              className="statement-brand font-medium text-[#C9A03D] leading-[0.9] select-none"
+              style={{ fontFamily: 'var(--font-eb-garamond, Georgia, serif)' }}
             >
               {brandName}
             </motion.h2>
@@ -99,7 +100,7 @@ export default function StatementFooter({ lang, dict }: StatementFooterProps) {
             transition={{ delay: 0.3, duration: 0.9, ease: [0.22, 1, 0.36, 1] as const }}
             className="flex flex-col sm:flex-row sm:items-center gap-4 mt-8"
           >
-            <p className="text-white/30 text-lg md:text-xl font-light italic tracking-wide">
+            <p className="text-[#FEF7ED]/50 text-lg md:text-xl font-light italic tracking-wide">
               {tagline}
             </p>
             <div className="sm:ms-auto shrink-0">
@@ -118,11 +119,11 @@ export default function StatementFooter({ lang, dict }: StatementFooterProps) {
 
       {/* ── Gold divider with central mark ── */}
       <div className="relative max-w-7xl mx-auto flex items-center gap-6 px-4 md:px-10 py-10">
-        <div className="flex-1 h-px bg-gradient-to-r from-transparent via-primary-gold/40 to-transparent" />
-        <div className="shrink-0 w-10 h-10 rounded-full border border-primary-gold/25 flex items-center justify-center">
-          <div className="w-3 h-3 rounded-full bg-primary-gold/60" />
+        <div className="flex-1 h-px bg-gradient-to-r from-transparent via-[#C9A03D]/40 to-transparent" />
+        <div className="shrink-0 w-10 h-10 rounded border border-[#C9A03D]/25 flex items-center justify-center">
+          <div className="w-3 h-3 rounded bg-[#C9A03D]/60" />
         </div>
-        <div className="flex-1 h-px bg-gradient-to-l from-transparent via-primary-gold/40 to-transparent" />
+        <div className="flex-1 h-px bg-gradient-to-l from-transparent via-[#C9A03D]/40 to-transparent" />
       </div>
 
       {/* ── Three-column utility grid ── */}
@@ -198,12 +199,12 @@ export default function StatementFooter({ lang, dict }: StatementFooterProps) {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder={dict.emailPlaceholder}
-                className="flex-1 bg-white/[0.06] border border-white/[0.1] rounded-xl px-4 py-3 min-h-[48px] text-sm text-white placeholder:text-white/25 outline-none focus:border-primary-gold/50 smooth-transition"
+                className="flex-1 bg-[#FEF7ED]/[0.06] border border-[#FEF7ED]/[0.1] rounded px-4 py-3 min-h-[48px] text-sm text-[#FEF7ED] placeholder:text-[#FEF7ED]/25 outline-none focus:border-[#C9A03D]/50 smooth-transition"
               />
               <button
                 type="submit"
                 aria-label={lang === 'ar' ? 'اشترك في النشرة البريدية' : 'Subscribe to newsletter'}
-                className="min-w-[48px] min-h-[48px] rounded-xl bg-primary-gold hover:bg-light-gold text-obsidian flex items-center justify-center smooth-transition active:scale-95 touch-manipulation shrink-0"
+                className="min-w-[48px] min-h-[48px] rounded bg-[#C9A03D] hover:bg-[#C9A03D]/80 text-[#1A1612] flex items-center justify-center smooth-transition active:scale-95 touch-manipulation shrink-0"
               >
                 <Send size={17} className={lang === 'ar' ? 'rotate-180' : ''} />
               </button>

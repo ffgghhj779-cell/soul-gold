@@ -215,10 +215,10 @@ export default function ProductRunway({
         <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
 
           <div>
-            <p className="text-[11px] font-extrabold tracking-[0.32em] uppercase text-primary-gold mb-2">
+            <p className="text-[11px] font-semibold tracking-[0.32em] uppercase text-primary-gold mb-2" style={{ fontFamily: 'var(--font-hanken, sans-serif)' }}>
               {isRtl ? 'منتجات مختارة بعناية' : 'Curated Selection'}
             </p>
-            <h2 className="text-fluid-h2 font-extrabold text-soft-charcoal">
+            <h2 className="text-fluid-h2 font-medium text-[var(--sg-on-surface)]" style={{ fontFamily: 'var(--font-eb-garamond, Georgia, serif)', letterSpacing: '-0.01em' }}>
               {dict.exclusive}
             </h2>
           </div>
@@ -229,11 +229,12 @@ export default function ProductRunway({
               <button
                 key={cat}
                 onClick={() => onCategoryChange(cat)}
-                className={`px-4 md:px-5 py-2.5 min-h-[48px] rounded-full font-bold text-sm smooth-transition touch-manipulation active:scale-95 ${
+                className={`px-4 md:px-5 py-2.5 min-h-[48px] rounded font-semibold text-sm smooth-transition touch-manipulation active:scale-95 ${
                   activeCategory === cat
-                    ? 'bg-soft-charcoal text-cream shadow-md'
-                    : 'text-soft-charcoal/55 hover:text-soft-charcoal hover:bg-white/80'
+                    ? 'bg-[#1A1612] text-[#FEF7ED] shadow-md'
+                    : 'text-[var(--sg-on-surface-var)] hover:text-[#1A1612] hover:bg-white/80'
                 }`}
+                style={{ fontFamily: 'var(--font-hanken, sans-serif)' }}
               >
                 {catLabel(cat)}
               </button>
@@ -307,11 +308,11 @@ export default function ProductRunway({
                   }}
                 >
                   <div
-                    className="bg-white rounded-[32px] p-5 border border-[rgba(201,160,61,0.18)] flex flex-col overflow-hidden h-full"
+                    className="bg-[#FEF7ED] rounded p-5 flex flex-col overflow-hidden h-full"
                     dir={isRtl ? 'rtl' : 'ltr'}
                   >
                     {/* ── Image with isolated dim overlay ── */}
-                    <div className={`relative w-full aspect-[3/4] ${product.bgColor} rounded-[24px] overflow-hidden mb-5 group`}>
+                    <div className={`relative w-full aspect-[3/4] ${product.bgColor} rounded overflow-hidden mb-5 group`}>
                       <Image
                         src={product.image}
                         alt={isRtl ? product.title_ar : product.title_en}
@@ -338,7 +339,7 @@ export default function ProductRunway({
                       />
 
                       {/* Badge — above overlay (z-10) */}
-                      <div className="absolute top-4 start-4 z-10 glass-card px-3 py-1.5 rounded-full text-xs font-bold text-dark-gold flex items-center gap-1">
+                      <div className="absolute top-4 start-4 z-10 bg-[#1A1612] px-3 py-1.5 rounded-full text-xs font-semibold tracking-widest text-[#C9A03D] flex items-center gap-1" style={{ fontFamily: 'var(--font-hanken, sans-serif)' }}>
                         <Sparkles size={11} />
                         {isRtl ? product.badge_ar : product.badge_en}
                       </div>
@@ -352,34 +353,37 @@ export default function ProductRunway({
                     </div>
 
                     {/* ── Text — lives entirely outside the dim overlay, always 100% visible ── */}
-                    <span className="text-[11px] font-extrabold text-primary-gold uppercase tracking-widest mb-2">
+                    <span className="text-[10px] font-semibold text-[var(--sg-outline)] uppercase tracking-[0.25em] mb-2" style={{ fontFamily: 'var(--font-hanken, sans-serif)' }}>
                       {isRtl ? (AR_LABELS[product.categoryKey] ?? product.categoryKey) : product.categoryKey}
                     </span>
 
-                    <h3 className="text-[1.1rem] font-extrabold text-slate-900 mb-2 leading-snug">
+                    <h3 className="text-[1.35rem] font-medium text-[var(--sg-on-surface)] mb-2 leading-snug" style={{ fontFamily: 'var(--font-eb-garamond, Georgia, serif)' }}>
                       {isRtl ? product.title_ar : product.title_en}
                     </h3>
 
-                    <p className="text-slate-700 text-sm leading-relaxed line-clamp-2 mb-3 flex-1">
+                    <p className="text-[var(--sg-on-surface-var)] text-[13px] leading-relaxed line-clamp-2 mb-3 flex-1" style={{ fontFamily: 'var(--font-hanken, sans-serif)' }}>
                       {isRtl ? product.desc_ar : product.desc_en}
                     </p>
 
-                    <p className="text-slate-600 text-xs font-semibold tracking-wide mb-4">
+                    <p className="text-[var(--sg-outline)] text-[10px] uppercase font-semibold tracking-[0.25em] mb-4" style={{ fontFamily: 'var(--font-hanken, sans-serif)' }}>
                       {isRtl ? product.weight_ar : product.weight_en}
                     </p>
 
+                    {/* Divider */}
+                    <div className="w-full mb-3" aria-hidden="true" style={{ height: '0.5px', backgroundColor: 'var(--sg-outline-variant, #CCC6BC)' }} />
+
                     {/* ── Price + Cart ── */}
-                    <div className="flex items-center justify-between mt-auto pt-3 border-t border-[rgba(201,160,61,0.15)]">
-                      <div className="flex items-baseline gap-1">
-                        <span className="font-extrabold text-2xl text-slate-900 leading-none">
+                    <div className="flex items-center justify-between mt-auto">
+                      <div className="flex items-baseline gap-1" style={{ fontFamily: 'var(--font-hanken, sans-serif)' }}>
+                        <span className="font-semibold text-base text-[var(--sg-on-surface)] leading-none">
                           {product.price}
                         </span>
-                        <span className="text-xs font-bold text-slate-400">SAR</span>
+                        <span className="text-xs font-medium text-[var(--sg-outline)]">SAR</span>
                       </div>
-                      {/* Cart — solid gold fill, white icon — maximum visibility */}
+                      {/* Cart — solid Obsidian fill, Cream icon */}
                       <button
                         onClick={() => onAddToCart(product)}
-                        className="min-w-[52px] min-h-[52px] rounded-full bg-primary-gold text-white flex items-center justify-center hover:bg-dark-gold shadow-md hover:shadow-lg smooth-transition active:scale-90 touch-manipulation hardware-accelerated"
+                        className="min-w-[44px] min-h-[44px] rounded bg-[#1A1612] text-[#FEF7ED] flex items-center justify-center hover:bg-[#2C2520] shadow-md hover:shadow-lg smooth-transition active:scale-90 touch-manipulation hardware-accelerated"
                         aria-label={isRtl ? 'أضف للسلة' : 'Add to cart'}
                       >
                         <ShoppingCart size={20} />

@@ -474,13 +474,13 @@ export default function SoulGoldApp() {
               </div>
 
               {/* Headline */}
-              <h2 className="text-fluid-h3 md:text-5xl font-extrabold text-soft-charcoal mb-6 leading-tight">
+              <h2 className="text-fluid-h3 md:text-5xl font-medium text-[var(--sg-on-surface)] mb-6 leading-tight" style={{ fontFamily: 'var(--font-eb-garamond, Georgia, serif)', letterSpacing: '-0.01em' }}>
                 {dict.aiTitle1}
                 <br />
-                <span className="text-primary-gold">{dict.aiTitle2}</span>
+                <span className="text-[#C9A03D]">{dict.aiTitle2}</span>
               </h2>
 
-              <p className="text-lg text-soft-charcoal/65 mb-12 leading-relaxed max-w-lg">
+              <p className="text-lg text-[var(--sg-on-surface-var)] mb-12 leading-relaxed max-w-lg" style={{ fontFamily: 'var(--font-hanken, sans-serif)' }}>
                 {dict.aiDesc}
               </p>
 
@@ -499,12 +499,12 @@ export default function SoulGoldApp() {
                     transition={{ delay: i * 0.12, duration: 0.65, ease: [0.22, 1, 0.36, 1] as const }}
                     className="flex gap-5 items-start group"
                   >
-                    <div className={`w-12 h-12 rounded-2xl flex items-center justify-center shrink-0 smooth-transition ${f.color}`}>
+                    <div className={`w-12 h-12 rounded flex items-center justify-center shrink-0 smooth-transition ${f.color}`}>
                       {f.icon}
                     </div>
                     <div className="pt-1">
-                      <h3 className="text-lg font-extrabold text-soft-charcoal mb-1">{f.title}</h3>
-                      <p className="text-soft-charcoal/55 leading-relaxed">{f.desc}</p>
+                      <h3 className="text-lg font-semibold text-[var(--sg-on-surface)] mb-1" style={{ fontFamily: 'var(--font-eb-garamond, Georgia, serif)' }}>{f.title}</h3>
+                      <p className="text-[var(--sg-on-surface-var)] leading-relaxed" style={{ fontFamily: 'var(--font-hanken, sans-serif)' }}>{f.desc}</p>
                     </div>
                   </motion.div>
                 ))}
@@ -516,20 +516,20 @@ export default function SoulGoldApp() {
 
             {/* ── RIGHT — Sticky chat interface ── */}
             <div className="md:sticky md:top-28">
-              <div className="glass-card backdrop-blur-xl rounded-[32px] p-2 md:p-3 luxury-shadow relative flex flex-col hardware-accelerated"
+              <div className="bg-[#FEF7ED]/80 backdrop-blur-xl border border-[var(--sg-outline-variant)] rounded p-2 md:p-3 luxury-shadow relative flex flex-col hardware-accelerated"
                    style={{ height: 'min(580px, 80svh)' }}>
 
                 {/* Chat header */}
-                <div className="bg-white/85 backdrop-blur-md rounded-t-[28px] px-5 py-4 flex items-center gap-4 shrink-0 border-b border-[rgba(201,160,61,0.1)]">
+                <div className="bg-[#FEF7ED] backdrop-blur-md rounded px-5 py-4 flex items-center gap-4 shrink-0 border-b border-[var(--sg-outline-variant)]">
                   <div className="relative shrink-0">
-                    <div className="w-11 h-11 rounded-full bg-gradient-to-tr from-primary-gold to-terracotta flex items-center justify-center text-white shadow-md">
+                    <div className="w-11 h-11 rounded-full bg-[#1A1612] flex items-center justify-center text-[#FEF7ED] shadow-md">
                       <Bot size={22} />
                     </div>
-                    <div className="absolute bottom-0 end-0 w-3 h-3 bg-green-400 border-2 border-white rounded-full" />
+                    <div className="absolute bottom-0 end-0 w-3 h-3 bg-green-400 border-2 border-[#FEF7ED] rounded-full" />
                   </div>
                   <div>
-                    <h4 className="font-extrabold text-soft-charcoal text-sm">{dict.aiChatName}</h4>
-                    <p className="text-xs text-green-500 font-semibold">{dict.aiChatStatus}</p>
+                    <h4 className="font-semibold text-[var(--sg-on-surface)] text-sm" style={{ fontFamily: 'var(--font-hanken, sans-serif)' }}>{dict.aiChatName}</h4>
+                    <p className="text-xs text-green-600 font-semibold" style={{ fontFamily: 'var(--font-hanken, sans-serif)' }}>{dict.aiChatStatus}</p>
                   </div>
                   {/* Decorative typing dots in header */}
                   <div className="ms-auto flex gap-1.5">
@@ -545,15 +545,15 @@ export default function SoulGoldApp() {
                   {chatMessages.map((msg, i) => (
                     <div key={i} className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}>
                       {msg.role === 'ai' && (
-                        <div className="w-7 h-7 rounded-full bg-gradient-to-tr from-primary-gold to-terracotta flex items-center justify-center text-white shrink-0 me-2 mt-1">
+                        <div className="w-7 h-7 rounded-full bg-[#1A1612] flex items-center justify-center text-[#FEF7ED] shrink-0 me-2 mt-1">
                           <Bot size={14} />
                         </div>
                       )}
-                      <div className={`max-w-[78%] px-4 py-3 rounded-[20px] text-sm leading-relaxed ${
+                      <div className={`max-w-[78%] px-4 py-3 rounded text-sm leading-relaxed ${
                         msg.role === 'user'
-                          ? 'bg-soft-charcoal text-white rounded-ee-none'
-                          : 'bg-white text-soft-charcoal shadow-sm border border-[rgba(201,160,61,0.1)] rounded-es-none'
-                      }`}>
+                          ? 'bg-[#1A1612] text-[#FEF7ED] rounded-ee-none'
+                          : 'bg-[#FEF7ED] text-[var(--sg-on-surface)] shadow-sm border border-[var(--sg-outline-variant)] rounded-es-none'
+                      }`} style={{ fontFamily: 'var(--font-hanken, sans-serif)' }}>
                         {lang === 'ar' ? msg.text_ar : msg.text_en}
                       </div>
                     </div>
@@ -574,7 +574,7 @@ export default function SoulGoldApp() {
                 </div>
 
                 {/* Input */}
-                <div className="p-3 rounded-b-[28px] shrink-0 border-t border-[rgba(201,160,61,0.08)]">
+                <div className="p-3 rounded shrink-0 border-t border-[var(--sg-outline-variant)] bg-[#FEF7ED]">
                   <form onSubmit={handleSendMessage} className="flex gap-2">
                     <input
                       type="text"
@@ -582,13 +582,14 @@ export default function SoulGoldApp() {
                       onChange={(e) => setChatInput(e.target.value)}
                       disabled={isTyping}
                       placeholder={dict.aiChatInput}
-                      className="flex-1 bg-cream rounded-full px-5 py-3 outline-none text-sm placeholder:text-soft-charcoal/35 font-medium text-soft-charcoal smooth-transition disabled:opacity-50"
+                      className="flex-1 bg-white rounded px-5 py-3 outline-none border border-[var(--sg-outline-variant)] text-sm placeholder:text-[var(--sg-outline)] font-medium text-[var(--sg-on-surface)] smooth-transition disabled:opacity-50"
+                      style={{ fontFamily: 'var(--font-hanken, sans-serif)' }}
                     />
                     <button
                       type="submit"
                       disabled={!chatInput.trim() || isTyping}
                       aria-label={lang === 'ar' ? 'إرسال رسالة' : 'Send message'}
-                      className={`min-w-[48px] min-h-[48px] rounded-full bg-primary-gold text-white flex items-center justify-center hover:bg-dark-gold smooth-transition active:scale-95 disabled:opacity-40 disabled:cursor-not-allowed shrink-0 shadow-md touch-manipulation ${lang === 'ar' ? 'rotate-180' : ''}`}
+                      className={`min-w-[48px] min-h-[48px] rounded bg-[#1A1612] text-[#FEF7ED] flex items-center justify-center hover:bg-[#2C2520] smooth-transition active:scale-95 disabled:opacity-40 disabled:cursor-not-allowed shrink-0 shadow-md touch-manipulation ${lang === 'ar' ? 'rotate-180' : ''}`}
                     >
                       <Send size={17} />
                     </button>
@@ -601,40 +602,40 @@ export default function SoulGoldApp() {
       </section>
 
       {/* ---------- Quality (Why Us) ---------- */}
-      <section id="quality" className="py-24 px-4 bg-soft-charcoal text-white smooth-transition hardware-accelerated">
+      <section id="quality" className="py-24 px-4 bg-[#1A1612] text-[#FEF7ED] smooth-transition hardware-accelerated">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-16">
-            <h2 className="text-fluid-h2 md:text-5xl font-bold mb-4 text-white smooth-transition">{dict.qualityTitle}</h2>
-            <p className="text-white/60 max-w-xl mx-auto text-lg hover:text-white/80 smooth-transition uppercase-none">{dict.qualityDesc}</p>
+            <h2 className="text-fluid-h2 md:text-5xl font-medium mb-4 text-[#FEF7ED] smooth-transition" style={{ fontFamily: 'var(--font-eb-garamond, Georgia, serif)', letterSpacing: '-0.01em' }}>{dict.qualityTitle}</h2>
+            <p className="text-[#FEF7ED]/70 max-w-xl mx-auto text-lg hover:text-[#FEF7ED]/90 smooth-transition uppercase-none" style={{ fontFamily: 'var(--font-hanken, sans-serif)' }}>{dict.qualityDesc}</p>
           </div>
           
           <div className="grid md:grid-cols-3 gap-8">
-            <div className="glass-panel border-white/10 rounded-[32px] p-8 hover:bg-white/10 smooth-transition group">
-              <div className="w-16 h-16 rounded-[24px] bg-primary-gold/20 flex items-center justify-center text-primary-gold mb-6 group-hover:bg-primary-gold group-hover:text-white smooth-transition">
+            <div className="border border-[#FEF7ED]/10 rounded p-8 hover:bg-[#FEF7ED]/5 smooth-transition group">
+              <div className="w-16 h-16 rounded bg-[#C9A03D]/20 flex items-center justify-center text-[#C9A03D] mb-6 group-hover:bg-[#C9A03D] group-hover:text-[#1A1612] smooth-transition">
                 <Heart size={32} />
               </div>
-              <h3 className="text-2xl font-bold mb-4 smooth-transition">{dict.quality1}</h3>
-              <p className="text-white/60 leading-relaxed group-hover:text-white/80 smooth-transition">
+              <h3 className="text-2xl font-semibold mb-4 smooth-transition text-[#FEF7ED]" style={{ fontFamily: 'var(--font-eb-garamond, Georgia, serif)' }}>{dict.quality1}</h3>
+              <p className="text-[#FEF7ED]/70 leading-relaxed group-hover:text-[#FEF7ED]/90 smooth-transition" style={{ fontFamily: 'var(--font-hanken, sans-serif)' }}>
                 {dict.quality1Desc}
               </p>
             </div>
             
-            <div className="glass-panel border-white/10 rounded-[32px] p-8 hover:bg-white/10 smooth-transition group">
-              <div className="w-16 h-16 rounded-[24px] bg-light-gold/20 flex items-center justify-center text-light-gold mb-6 group-hover:bg-light-gold group-hover:text-white smooth-transition">
+            <div className="border border-[#FEF7ED]/10 rounded p-8 hover:bg-[#FEF7ED]/5 smooth-transition group">
+              <div className="w-16 h-16 rounded bg-[#C9A03D]/20 flex items-center justify-center text-[#C9A03D] mb-6 group-hover:bg-[#C9A03D] group-hover:text-[#1A1612] smooth-transition">
                 <Droplets size={32} />
               </div>
-              <h3 className="text-2xl font-bold mb-4 smooth-transition">{dict.quality2}</h3>
-              <p className="text-white/60 leading-relaxed group-hover:text-white/80 smooth-transition">
+              <h3 className="text-2xl font-semibold mb-4 smooth-transition text-[#FEF7ED]" style={{ fontFamily: 'var(--font-eb-garamond, Georgia, serif)' }}>{dict.quality2}</h3>
+              <p className="text-[#FEF7ED]/70 leading-relaxed group-hover:text-[#FEF7ED]/90 smooth-transition" style={{ fontFamily: 'var(--font-hanken, sans-serif)' }}>
                 {dict.quality2Desc}
               </p>
             </div>
             
-            <div className="glass-panel border-white/10 rounded-[32px] p-8 hover:bg-white/10 smooth-transition group">
-              <div className="w-16 h-16 rounded-[24px] bg-green-500/20 flex items-center justify-center text-green-400 mb-6 group-hover:bg-green-500 group-hover:text-white smooth-transition">
+            <div className="border border-[#FEF7ED]/10 rounded p-8 hover:bg-[#FEF7ED]/5 smooth-transition group">
+              <div className="w-16 h-16 rounded bg-[#C9A03D]/20 flex items-center justify-center text-[#C9A03D] mb-6 group-hover:bg-[#C9A03D] group-hover:text-[#1A1612] smooth-transition">
                 <Leaf size={32} />
               </div>
-              <h3 className="text-2xl font-bold mb-4 smooth-transition">{dict.quality3}</h3>
-              <p className="text-white/60 leading-relaxed group-hover:text-white/80 smooth-transition">
+              <h3 className="text-2xl font-semibold mb-4 smooth-transition text-[#FEF7ED]" style={{ fontFamily: 'var(--font-eb-garamond, Georgia, serif)' }}>{dict.quality3}</h3>
+              <p className="text-[#FEF7ED]/70 leading-relaxed group-hover:text-[#FEF7ED]/90 smooth-transition" style={{ fontFamily: 'var(--font-hanken, sans-serif)' }}>
                 {dict.quality3Desc}
               </p>
             </div>
@@ -661,10 +662,10 @@ export default function SoulGoldApp() {
               animate={{ opacity: 1, y: 0, scale: 1 }}
               exit={{ opacity: 0, y: 40, scale: 0.95 }}
               transition={{ duration: 0.3, ease: 'easeOut' }}
-              className="fixed inset-x-4 top-1/2 -translate-y-1/2 max-w-md mx-auto glass-card backdrop-blur-xl rounded-[32px] p-6 z-[70] hardware-accelerated"
+              className="fixed inset-x-4 top-1/2 -translate-y-1/2 max-w-md mx-auto bg-[#FEF7ED] border border-[var(--sg-outline-variant)] rounded p-6 z-[70] hardware-accelerated luxury-shadow"
             >
               <div className="flex items-center justify-between mb-6">
-                <h3 className="text-xl font-extrabold text-soft-charcoal">{dict.checkoutTitle}</h3>
+                <h3 className="text-2xl font-medium text-[var(--sg-on-surface)]" style={{ fontFamily: 'var(--font-eb-garamond, Georgia, serif)' }}>{dict.checkoutTitle}</h3>
                 <button
                   onClick={() => setIsCheckoutOpen(false)}
                   className="min-w-[48px] min-h-[48px] flex items-center justify-center rounded-full hover:bg-cream smooth-transition active:scale-95 touch-manipulation"
@@ -675,48 +676,51 @@ export default function SoulGoldApp() {
               </div>
               <form onSubmit={handleCheckout} className="space-y-4">
                 <div>
-                  <label className="block text-sm font-bold text-soft-charcoal/70 mb-2">{dict.nameLabel}</label>
+                  <label className="block text-sm font-semibold text-[var(--sg-on-surface-var)] mb-2" style={{ fontFamily: 'var(--font-hanken, sans-serif)' }}>{dict.nameLabel}</label>
                   <input
                     required
                     value={customerName}
                     onChange={(e) => setCustomerName(e.target.value)}
-                    className="w-full glass-panel px-4 py-3 min-h-[48px] rounded-xl outline-none focus:border-primary-gold smooth-transition"
+                    className="w-full bg-white border border-[var(--sg-outline-variant)] text-[var(--sg-on-surface)] px-4 py-3 min-h-[48px] rounded outline-none focus:border-[#C9A03D] smooth-transition"
+                    style={{ fontFamily: 'var(--font-hanken, sans-serif)' }}
                   />
                 </div>
                 <div>
-                  <label className="block text-sm font-bold text-soft-charcoal/70 mb-2">{dict.phoneLabel}</label>
+                  <label className="block text-sm font-semibold text-[var(--sg-on-surface-var)] mb-2" style={{ fontFamily: 'var(--font-hanken, sans-serif)' }}>{dict.phoneLabel}</label>
                   <input
                     required
                     type="tel"
                     value={customerPhone}
                     onChange={(e) => setCustomerPhone(e.target.value)}
-                    className="w-full glass-panel px-4 py-3 min-h-[48px] rounded-xl outline-none focus:border-primary-gold smooth-transition"
+                    className="w-full bg-white border border-[var(--sg-outline-variant)] text-[var(--sg-on-surface)] px-4 py-3 min-h-[48px] rounded outline-none focus:border-[#C9A03D] smooth-transition"
+                    style={{ fontFamily: 'var(--font-hanken, sans-serif)' }}
                   />
                 </div>
                 <div>
-                  <label className="block text-sm font-bold text-soft-charcoal/70 mb-2">{dict.addressLabel}</label>
+                  <label className="block text-sm font-semibold text-[var(--sg-on-surface-var)] mb-2" style={{ fontFamily: 'var(--font-hanken, sans-serif)' }}>{dict.addressLabel}</label>
                   <textarea
                     required
                     value={customerAddress}
                     onChange={(e) => setCustomerAddress(e.target.value)}
                     rows={3}
-                    className="w-full glass-panel px-4 py-3 rounded-xl outline-none focus:border-primary-gold smooth-transition resize-none"
+                    className="w-full bg-white border border-[var(--sg-outline-variant)] text-[var(--sg-on-surface)] px-4 py-3 rounded outline-none focus:border-[#C9A03D] smooth-transition resize-none"
+                    style={{ fontFamily: 'var(--font-hanken, sans-serif)' }}
                   />
                 </div>
                 <div className="flex items-center justify-between pt-2">
-                  <span className="font-bold text-lg text-soft-charcoal">SAR {cartTotal}</span>
-                  <div className="flex gap-2">
+                  <span className="font-semibold text-lg text-[var(--sg-on-surface)]" style={{ fontFamily: 'var(--font-hanken, sans-serif)' }}>SAR {cartTotal}</span>
+                  <div className="flex gap-2" style={{ fontFamily: 'var(--font-hanken, sans-serif)' }}>
                     <button
                       type="button"
                       onClick={() => setIsCheckoutOpen(false)}
-                      className="px-5 min-h-[48px] rounded-full font-bold text-soft-charcoal hover:bg-cream smooth-transition active:scale-95 touch-manipulation"
+                      className="px-5 min-h-[48px] rounded font-semibold text-[var(--sg-on-surface)] hover:bg-[#1A1612]/5 smooth-transition active:scale-95 touch-manipulation"
                     >
                       {dict.cancel}
                     </button>
                     <button
                       type="submit"
                       disabled={isCheckingOut}
-                      className="px-6 min-h-[48px] rounded-full font-extrabold bg-primary-gold text-white hover:bg-dark-gold smooth-transition active:scale-95 touch-manipulation disabled:opacity-50"
+                      className="px-6 min-h-[48px] rounded font-semibold bg-[#1A1612] text-[#FEF7ED] hover:bg-[#2C2520] smooth-transition active:scale-95 touch-manipulation disabled:opacity-50"
                     >
                       {dict.placeOrder}
                     </button>

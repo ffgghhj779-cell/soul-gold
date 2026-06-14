@@ -96,11 +96,11 @@ export default function LuxuryHeader({
 
         {/* CSS class-based padding transition avoids JS-driven layout reflow */}
         <header
-          className={`relative pointer-events-auto px-5 md:px-6 rounded-[32px] w-full flex items-center justify-between hardware-accelerated
+          className={`relative pointer-events-auto px-5 md:px-6 rounded w-full flex items-center justify-between hardware-accelerated
             ${isScrolled ? 'py-2.5' : 'py-4'}
             ${isScrolled
-              ? 'glass-panel shadow-[0_8px_40px_rgba(201,160,61,0.14)]'
-              : 'bg-white/55 backdrop-blur-2xl border border-[rgba(201,160,61,0.12)] shadow-sm'
+              ? 'bg-[var(--sg-surface)]/95 backdrop-blur-md shadow-sm border border-[var(--sg-outline-variant)]'
+              : 'bg-transparent'
             }
             [transition:padding_0.35s_cubic-bezier(0.25,1,0.5,1),background-color_0.35s_cubic-bezier(0.25,1,0.5,1),box-shadow_0.35s_cubic-bezier(0.25,1,0.5,1)]`}
         >
@@ -136,16 +136,16 @@ export default function LuxuryHeader({
           </a>
 
           {/* Desktop nav */}
-          <nav className="hidden md:flex items-center gap-7 font-medium text-soft-charcoal">
+          <nav className="hidden md:flex items-center gap-7 font-medium text-[var(--sg-on-surface)]" style={{ fontFamily: 'var(--font-hanken, sans-serif)' }}>
             {navLinks(dict).map((item) => (
               <a
                 key={item.href}
                 href={item.href}
-                className="relative group/link hover:text-primary-gold smooth-transition flex items-center gap-1 py-1"
+                className="relative group/link hover:text-[#C9A03D] smooth-transition flex items-center gap-1 py-1"
               >
                 {item.label}
-                {item.sparkle && <Sparkles size={13} className="text-terracotta" />}
-                <span className="absolute -bottom-0.5 start-0 w-0 h-px bg-primary-gold group-hover/link:w-full smooth-transition rounded-full" />
+                {item.sparkle && <Sparkles size={13} className="text-[#C9A03D]" />}
+                <span className="absolute -bottom-0.5 start-0 w-0 h-px bg-[#C9A03D] group-hover/link:w-full smooth-transition rounded-full" />
               </a>
             ))}
           </nav>
@@ -155,16 +155,16 @@ export default function LuxuryHeader({
             <button
               onClick={onToggleLanguage}
               aria-label={lang === 'ar' ? 'Switch to English' : 'تغيير إلى العربية'}
-              className="hidden sm:flex items-center justify-center gap-1.5 min-w-[48px] min-h-[48px] px-3 rounded-full hover:bg-cream smooth-transition text-soft-charcoal touch-manipulation active:scale-95"
+              className="hidden sm:flex items-center justify-center gap-1.5 min-w-[48px] min-h-[48px] px-3 rounded hover:bg-[var(--sg-surface-low)] smooth-transition text-[var(--sg-on-surface)] touch-manipulation active:scale-95"
             >
               <Globe size={16} className={lang === 'ar' ? 'rotate-180' : ''} />
-              <span className="text-sm font-bold text-primary-gold">{dict.language}</span>
+              <span className="text-sm font-semibold text-[#C9A03D]" style={{ fontFamily: 'var(--font-hanken, sans-serif)' }}>{dict.language}</span>
             </button>
 
             <button
               onClick={onScrollToProducts}
               aria-label="Browse products"
-              className="min-w-[48px] min-h-[48px] flex items-center justify-center rounded-full hover:bg-cream smooth-transition text-soft-charcoal touch-manipulation active:scale-95"
+              className="min-w-[48px] min-h-[48px] flex items-center justify-center rounded hover:bg-[var(--sg-surface-low)] smooth-transition text-[var(--sg-on-surface)] touch-manipulation active:scale-95"
             >
               <Search size={20} />
             </button>
@@ -173,7 +173,7 @@ export default function LuxuryHeader({
               onClick={onOpenCheckout}
               disabled={isCheckingOut}
               aria-label={lang === 'ar' ? `عربة التسوق${cartCount > 0 ? ` (${cartCount})` : ''}` : `Shopping cart${cartCount > 0 ? ` (${cartCount} items)` : ''}`}
-              className={`relative min-w-[48px] min-h-[48px] flex items-center justify-center rounded-full hover:bg-cream smooth-transition text-soft-charcoal touch-manipulation active:scale-95 ${isCheckingOut ? 'opacity-50' : ''}`}
+              className={`relative min-w-[48px] min-h-[48px] flex items-center justify-center rounded hover:bg-[var(--sg-surface-low)] smooth-transition text-[var(--sg-on-surface)] touch-manipulation active:scale-95 ${isCheckingOut ? 'opacity-50' : ''}`}
             >
               <ShoppingCart size={20} />
               <AnimatePresence>
@@ -251,18 +251,13 @@ export default function LuxuryHeader({
               animate={{ x: '0%' }}
               exit={{   x: lang === 'ar' ? '-100%' : '100%' }}
               transition={{ duration: 0.38, ease: [0.22, 1, 0.36, 1] as const }}
-              className="fixed top-0 bottom-0 end-0 z-50 md:hidden w-[min(100vw,340px)] h-[100dvh] flex flex-col pt-safe pb-safe hardware-accelerated shadow-2xl overflow-hidden overscroll-contain"
+              className="fixed top-0 bottom-0 end-0 z-50 md:hidden w-[min(100vw,340px)] h-[100dvh] flex flex-col pt-safe pb-safe hardware-accelerated shadow-2xl overflow-hidden overscroll-contain bg-[var(--sg-surface)]"
               style={{
-                background: 'rgba(254,247,237,0.97)',
-                /* 32px blur is a full-screen GPU readback on mobile.
-                   6px is imperceptible at 97% background opacity but costs ~5x less. */
-                backdropFilter: 'blur(6px)',
-                WebkitBackdropFilter: 'blur(6px)',
                 overscrollBehavior: 'contain',
               }}
             >
               {/* Top accent line */}
-              <div className="h-1 w-full shimmer-bar" />
+              <div className="h-1 w-full bg-[#C9A03D]" />
 
               {/* Brand mark */}
               <div className="px-8 pt-12 pb-6 border-b border-[rgba(201,160,61,0.15)]">
@@ -309,7 +304,8 @@ export default function LuxuryHeader({
                 <button
                   onClick={() => { onToggleLanguage(); onToggleMobileMenu(); }}
                   aria-label={lang === 'ar' ? 'Switch to English' : 'تغيير إلى العربية'}
-                  className="w-full min-h-[52px] rounded-full bg-soft-charcoal text-white flex items-center justify-center gap-2 font-bold text-base smooth-transition active:scale-95 touch-manipulation"
+                  className="w-full min-h-[52px] rounded bg-[#1A1612] text-[#FEF7ED] flex items-center justify-center gap-2 font-medium text-base smooth-transition active:scale-95 touch-manipulation"
+                  style={{ fontFamily: 'var(--font-hanken, sans-serif)' }}
                 >
                   <Globe size={18} className={lang === 'ar' ? 'rotate-180' : ''} />
                   {dict.language} / {lang === 'ar' ? 'English' : 'العربية'}
@@ -317,7 +313,8 @@ export default function LuxuryHeader({
                 <button
                   onClick={() => { onOpenCheckout(); onToggleMobileMenu(); }}
                   aria-label={lang === 'ar' ? `عربة التسوق${cartCount > 0 ? ` (${cartCount})` : ''}` : `Shopping cart${cartCount > 0 ? ` (${cartCount} items)` : ''}`}
-                  className="w-full min-h-[52px] rounded-full glass-panel border border-[rgba(201,160,61,0.3)] text-soft-charcoal flex items-center justify-center gap-2 font-bold text-base smooth-transition active:scale-95 touch-manipulation"
+                  className="w-full min-h-[52px] rounded border border-[var(--sg-outline-variant)] text-[var(--sg-on-surface)] flex items-center justify-center gap-2 font-medium text-base smooth-transition active:scale-95 touch-manipulation"
+                  style={{ fontFamily: 'var(--font-hanken, sans-serif)' }}
                 >
                   <ShoppingCart size={18} />
                   {cartCount > 0 ? `(${cartCount})` : ''}

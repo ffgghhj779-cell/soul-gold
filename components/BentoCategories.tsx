@@ -82,7 +82,7 @@ function BentoTile({
       /* Use simpler fade-only on mobile (no Y translation = no layout work each frame)
          and full slide+fade on desktop via CSS media via the variants object trick */
       variants={typeof window !== 'undefined' && window.innerWidth < 768 ? reveal : revealDesktop}
-      className={`group relative rounded-[32px] overflow-hidden cursor-pointer touch-manipulation select-none ${className}`}
+      className={`group relative rounded overflow-hidden cursor-pointer touch-manipulation select-none ${className}`}
     >
       {/* Image */}
       <Image
@@ -111,7 +111,7 @@ function BentoTile({
       {/* Top-right arrow — hidden until hover */}
       <div
         aria-hidden="true"
-        className="absolute top-3 end-3 min-w-[44px] min-h-[44px] rounded-full glass-panel border border-white/20 flex items-center justify-center text-white opacity-0 translate-y-2 group-hover:opacity-100 group-hover:translate-y-0 smooth-transition"
+        className="absolute top-3 end-3 min-w-[44px] min-h-[44px] rounded bg-[#1A1612]/80 backdrop-blur-sm border border-white/10 flex items-center justify-center text-[#C9A03D] opacity-0 translate-y-2 group-hover:opacity-100 group-hover:translate-y-0 smooth-transition"
       >
         <ArrowUpRight size={16} />
       </div>
@@ -119,18 +119,19 @@ function BentoTile({
       {/* Bottom content */}
       <div className="absolute bottom-0 start-0 w-full p-6 md:p-8">
         {/* Gold accent bar */}
-        <div className="h-[3px] w-8 bg-primary-gold rounded-full mb-4 group-hover:w-14 smooth-transition" />
+        <div className="h-[2px] w-8 bg-[#C9A03D] rounded-full mb-4 group-hover:w-14 smooth-transition" />
 
         <h3
-          className={`text-white font-extrabold leading-tight ${
+          className={`text-white font-medium leading-tight ${
             isHero ? 'text-2xl md:text-3xl xl:text-4xl' : 'text-lg md:text-xl'
           }`}
+          style={{ fontFamily: 'var(--font-eb-garamond, Georgia, serif)' }}
         >
           {lang === 'ar' ? tile.name_ar : tile.name_en}
         </h3>
 
         {/* Sub-label — slides up on hover */}
-        <p className="text-white/0 text-sm mt-1.5 font-medium group-hover:text-white/60 translate-y-2 group-hover:translate-y-0 smooth-transition">
+        <p className="text-white/0 text-sm mt-1.5 font-medium group-hover:text-white/70 translate-y-2 group-hover:translate-y-0 smooth-transition" style={{ fontFamily: 'var(--font-hanken, sans-serif)' }}>
           {lang === 'ar' ? tile.sub_ar : tile.sub_en}
         </p>
       </div>
@@ -140,18 +141,18 @@ function BentoTile({
 
 export default function BentoCategories({ lang, dict }: BentoCategoriesProps) {
   return (
-    <section id="categories" className="py-24 px-4 bg-white">
+    <section id="categories" className="py-24 px-4 bg-[#FEF7ED]">
       <div className="max-w-7xl mx-auto">
 
         {/* Section header — editorial split */}
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-10">
           <div>
-            <p className="text-[11px] font-extrabold tracking-[0.32em] uppercase text-primary-gold mb-3">
+            <p className="text-[11px] font-semibold tracking-[0.32em] uppercase text-[#C9A03D] mb-3" style={{ fontFamily: 'var(--font-hanken, sans-serif)' }}>
               {lang === 'ar' ? 'مجموعاتنا الحصرية' : 'Our Collections'}
             </p>
-            <h2 className="text-fluid-h2 font-extrabold text-soft-charcoal">{dict.discover}</h2>
+            <h2 className="text-fluid-h2 font-medium text-[var(--sg-on-surface)]" style={{ fontFamily: 'var(--font-eb-garamond, Georgia, serif)', letterSpacing: '-0.01em' }}>{dict.discover}</h2>
           </div>
-          <p className="text-soft-charcoal/50 max-w-xs text-base leading-relaxed md:text-end">
+          <p className="text-[var(--sg-on-surface-var)] max-w-xs text-base leading-relaxed md:text-end" style={{ fontFamily: 'var(--font-hanken, sans-serif)' }}>
             {dict.discoverDesc}
           </p>
         </div>
