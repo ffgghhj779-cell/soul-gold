@@ -283,9 +283,6 @@ export default function ProductRunway({
               scrollPaddingRight:  runwayPadding,
               overscrollBehaviorX: 'contain',
               WebkitOverflowScrolling: 'touch',
-              /* pan-x: lets browser handle horizontal swipe natively at 120fps,
-                 blocks vertical scroll capture — critical for runway feel */
-              touchAction: 'pan-x pinch-zoom',
             }}
           >
             <AnimatePresence mode="popLayout">

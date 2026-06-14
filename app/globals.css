@@ -47,17 +47,6 @@ body {
   -webkit-tap-highlight-color: transparent;
   /* Stop iOS rubber-band bounce — gives native app feel */
   overscroll-behavior-y: none;
-  /* Eliminate scrollbar gutter shift on desktop */
-  scrollbar-gutter: stable;
-}
-
-/* Global scrollbar hide for all hidden-scrollbar elements */
-* {
-  scrollbar-width: none;        /* Firefox */
-  -ms-overflow-style: none;     /* IE/Edge */
-}
-*::-webkit-scrollbar {
-  display: none;                /* Chrome/Safari/Opera */
 }
 
 /* Respect user's OS-level reduced-motion preference */
