@@ -32,9 +32,19 @@ html {
   scroll-behavior: smooth;
   /* Prevent horizontal overflow / page-shake on all mobile viewports */
   overflow-x: hidden;
+  /* NEVER set overflow-y on html — it traps touch scroll on iOS Safari */
   /* iOS text size inflation fix */
   -webkit-text-size-adjust: 100%;
   text-size-adjust: 100%;
+}
+
+/* Safe drawer scroll lock — targets html, not body.style.overflow
+   body.style.overflow='hidden' on iOS can permanently freeze scroll
+   if the cleanup effect doesn't fire (e.g. fast navigation).         */
+html.menu-open body {
+  overflow: hidden;
+  /* Prevent the page jumping when scrollbar disappears on desktop */
+  padding-right: 0;
 }
 
 body {
@@ -44,11 +54,11 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   overflow-x: hidden;
+  /* Allow native vertical scroll and momentum on all mobile browsers */
+  overflow-y: auto;
   -webkit-tap-highlight-color: transparent;
-  /* Native app feel: stop pull-to-refresh bounce */
-  overscroll-behavior-y: none;
-  /* Momentum scroll for all iOS containers */
-  -webkit-overflow-scrolling: touch;
+  /* Contain horizontal overscroll only — never block vertical scroll */
+  overscroll-behavior-x: none;
 }
 
 /* Respect user's OS-level reduced-motion preference */

@@ -234,11 +234,15 @@ export default function SoulGoldApp() {
   }, [lang]);
 
   // Lock body scroll while mobile drawer is open
-  // IMPORTANT: only overflow, never touchAction — touchAction:none on body
-  // prevents ALL touch events even after the menu closes on some iOS versions.
+  // SAFE approach: add a class to <html> instead of directly mutating body.style.overflow
+  // body.style.overflow='hidden' on iOS sometimes fails to restore, permanently freezing scroll.
   useEffect(() => {
-    document.body.style.overflow = isMobileMenuOpen ? 'hidden' : '';
-    return () => { document.body.style.overflow = ''; };
+    if (isMobileMenuOpen) {
+      document.documentElement.classList.add('menu-open');
+    } else {
+      document.documentElement.classList.remove('menu-open');
+    }
+    return () => { document.documentElement.classList.remove('menu-open'); };
   }, [isMobileMenuOpen]);
 
   useEffect(() => {
@@ -364,7 +368,7 @@ export default function SoulGoldApp() {
   };
 
   return (
-    <div className="min-h-screen relative font-sans overflow-x-hidden transition-all duration-300 ease-out px-safe">
+    <div className="min-h-screen relative font-sans overflow-x-hidden px-safe">
       {/* ---------- Top Promo Bar ---------- */}
       <div className="bg-primary-gold text-white text-xs md:text-sm py-2.5 px-4 text-center font-medium">
         <span>{dict.topBar}</span>
