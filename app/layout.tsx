@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from 'next';
-import { Cairo, Tajawal } from 'next/font/google';
+import { Cairo, Tajawal, EB_Garamond, Hanken_Grotesk } from 'next/font/google';
 import './globals.css';
 
 const cairo = Cairo({
@@ -13,6 +13,20 @@ const tajawal = Tajawal({
   weight: ['400', '500', '700'],
   subsets: ['latin', 'arabic'],
   variable: '--font-tajawal',
+  display: 'swap',
+});
+
+const ebGaramond = EB_Garamond({
+  weight: ['400', '500', '600'],
+  subsets: ['latin'],
+  variable: '--font-eb-garamond',
+  display: 'swap',
+});
+
+const hankenGrotesk = Hanken_Grotesk({
+  weight: ['400', '500', '600'],
+  subsets: ['latin'],
+  variable: '--font-hanken',
   display: 'swap',
 });
 
@@ -31,8 +45,11 @@ export const viewport: Viewport = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="ar" dir="rtl" className={`${cairo.variable} ${tajawal.variable}`}>
+    <html lang="ar" dir="rtl" className={`${cairo.variable} ${tajawal.variable} ${ebGaramond.variable} ${hankenGrotesk.variable}`}>
       <head>
+        {/* Preconnect to font CDNs */}
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         {/* Preconnect to image CDNs — eliminates TCP handshake from LCP critical path */}
         <link rel="preconnect" href="https://images.unsplash.com" />
         <link rel="dns-prefetch" href="https://images.unsplash.com" />

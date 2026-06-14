@@ -1,6 +1,7 @@
 @import "tailwindcss";
 
 :root {
+  /* ── Existing Soul Gold tokens ──────────────────────────────── */
   --primary-gold: #C9A03D;
   --light-gold: #E8C468;
   --dark-gold: #A67C1E;
@@ -11,6 +12,22 @@
   --obsidian: #1A1612;
   --charcoal: #2C2C2C;
   --gold-border: rgba(201, 160, 61, 0.15);
+
+  /* ── DESIGN.md tokens (exact values from spec) ───────────────── */
+  --sg-background:        #FFF8F3;
+  --sg-surface:           #FFF8F3;
+  --sg-surface-low:       #FBF2E8;
+  --sg-surface-container: #F6ECE3;
+  --sg-on-surface:        #1F1B15;
+  --sg-on-surface-var:    #4A463F;
+  --sg-primary:           #625E56;
+  --sg-primary-container: #FEF7ED;
+  --sg-tertiary:          #785A00;
+  --sg-tertiary-fixed:    #FFDF9C;
+  --sg-tertiary-fixed-dim:#EDC15A;
+  --sg-outline:           #7B776E;
+  --sg-outline-variant:   #CCC6BC;
+  --sg-inverse-surface:   #343029;
 }
 
 @theme {

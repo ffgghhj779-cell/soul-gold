@@ -22,6 +22,8 @@ import LuxuryHeader     from '@/components/LuxuryHeader';
 import ProductRunway    from '@/components/ProductRunway';
 import BentoCategories  from '@/components/BentoCategories';
 import StatementFooter  from '@/components/StatementFooter';
+import SoulGoldHero     from '@/components/SoulGoldHero';
+import CuratedEssentials from '@/components/CuratedEssentials';
 
 const t = {
   ar: {
@@ -387,8 +389,11 @@ export default function SoulGoldApp() {
         onToggleMobileMenu={() => setIsMobileMenuOpen(prev => !prev)}
       />
 
-      {/* ---------- Hero Section — Cinematic Editorial ---------- */}
-      <LuxuryHero lang={lang} dict={dict} onShopNow={scrollToProducts} />
+      {/* ---------- Hero Section — Soul Gold Cinematic Hero (DESIGN.md) ---------- */}
+      <SoulGoldHero lang={lang} onShopClick={scrollToProducts} />
+
+      {/* Legacy hero kept below for reference — hidden in prod */}
+      {/* <LuxuryHero lang={lang} dict={dict} onShopNow={scrollToProducts} /> */}
 
       {/* ---------- Trust Indicators ---------- */}
       <div className="max-w-7xl mx-auto px-4 -mt-8 md:-mt-12 relative z-10 smooth-transition hardware-accelerated">
@@ -428,6 +433,12 @@ export default function SoulGoldApp() {
 
       {/* ---------- Bento Categories ---------- */}
       <BentoCategories lang={lang} dict={dict} />
+
+      {/* ---------- Curated Essentials — DESIGN.md Section ---------- */}
+      <CuratedEssentials
+        lang={lang}
+        onAddToCart={(p) => handleAddToCart({ id: p.id, title_en: p.name_en, title_ar: p.name_ar, price: p.price, image: p.image, desc_en: p.origin_en, desc_ar: p.origin_ar, weight_en: p.tag_en, weight_ar: p.tag_ar, bgColor: 'bg-cream', categoryKey: 'essentials', badge_en: p.badge_en ?? '', badge_ar: p.badge_ar ?? '' } as unknown as Parameters<typeof handleAddToCart>[0])}
+      />
 
       {/* ---------- Product Runway Carousel ---------- */}
       <div ref={productsRef}>
